@@ -1,4 +1,4 @@
-static bool ParseExpression(string input, out double num1, , out char op,out double num2)
+static bool ParseExpression(string input, out double num1, out double num2, out char op)
     {
         num1 = 0;
         num2 = 0;
@@ -6,6 +6,15 @@ static bool ParseExpression(string input, out double num1, , out char op,out dou
 
         char[] operators = new char[] { '+', '-', '*', '/' };
         int index = input.IndexOfAny(operators);
+        
+        if (input[0]== '+' || input[0]=='-')
+        {
+            index = input.IndexOfAny(operators, 1);
+        }
+        if (index <= 0 || index >= input.Length - 1)
+       {
+            int index = input.IndexOfAny(operators, 1);
+       }
         if (index<=0 || index >= input.Length - 1)
         {
             return false;
@@ -17,8 +26,8 @@ try
         string part1 = input.Substring(0, index).Trim();
         string part2 = input.Substring(index + 1).Trim();
 
-         num1=double.Parse(part1);
-         num2=double.Parse(part2);
+        double num1=double.Parse(part1);
+        double num2=double.Parse(part2);
         return true;
     }
         catch (FormatException)
