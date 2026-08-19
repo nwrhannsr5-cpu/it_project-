@@ -1,0 +1,130 @@
+using System;
+
+class Program
+{
+    public static string GetUserInput()
+    {
+        Console.Write("Enter your calculation: ");
+        string userInput = Console.ReadLine();
+        while (string.IsNullOrWhiteSpace(userInput))
+        {
+            Console.Write("Input cannot be empty\nPlease enter your calculation: ");
+            userInput = Console.ReadLine();
+        }
+        return userInput;
+    }
+
+   static bool ParseExpression(string input, out double num1,  out char op,out double num2)
+    {
+        num1 = 0;
+        num2 = 0;
+        op = ' ';
+
+        char[] operators = new char[] { '+', '-', '*', '/' };
+        int index = input.IndexOfAny(operators);
+        
+        if (input[0]== '+' || input[0]=='-')
+        {
+            index = input.IndexOfAny(operators, 1);
+        }
+        if (index <= 0 || index >= input.Length - 1)
+       {
+             index = input.IndexOfAny(operators, 1);
+       }
+       if(index>0 &&(input[index-1]=='*' || input [index -1]=='/' || input[index-1]=='+' || input[index-1]=='-'))
+        {
+            index = index -1;
+        }
+        if (index<=0 || index >= input.Length - 1)
+        {
+            return false;
+        }
+try
+        {
+         op = input[index];
+
+        string part1 = input.Substring(0, index).Trim();
+        string part2 = input.Substring(index + 1).Trim();
+
+        num1=double.Parse(part1);
+        num2=double.Parse(part2);
+        return true;
+    }
+        catch (FormatException)
+        {
+            return false;
+        }
+    }
+    public  static double Calculate(double num1,  char op,double num2)
+{
+    switch (op)
+    {
+        case '+':
+            return num1 + num2;
+
+        case '-':
+            return num1 - num2;
+
+        case '*':
+            return num1 * num2;
+
+        case '/':
+            if (num2 == 0)
+            {
+                Console.WriteLine("Error: Cannot divide by zero.");
+                return 0;
+            }
+            return num1 / num2;
+
+        default:
+            Console.WriteLine("Error: Unknown operator.");
+            return 0;
+    }
+}
+
+    static void DisplayResult(double num1, char op, double num2, double result)
+    {
+        Console.WriteLine(num1+" "+op+" "+num2+" "+" = "+result);
+       
+    }
+
+    static void Main()
+    {
+        bool keepCalculating = true;
+        Console.WriteLine("=== Hi💕, Welcome to our little Calculator ===");
+
+        while (keepCalculating)
+        {
+            string input = GetUserInput();
+            double num1;
+            double num2;
+            char op;
+
+            if (ParseExpression(input, out num1, out op, out num2))
+            {
+                double result = Calculate(num1, op, num2);
+                DisplayResult(num1, op, num2, result);
+            }
+            else
+            {
+                Console.WriteLine("Error: Invalid expression format. (e.g., 5+3)");
+                continue;
+            }
+
+            Console.Write("Another calculation🫣? (y/n): ");
+            string answer = Console.ReadLine().Trim().ToLower();
+
+            while (answer != "y" && answer != "n")
+            {
+                Console.Write("Please enter 'y' or 'n': ");
+                answer = Console.ReadLine().Trim().ToLower();
+            }
+
+            if (answer == "n")
+            {
+                keepCalculating = false;
+                Console.WriteLine("❤️ Goodbye!");
+            }
+        }
+    }
+}
