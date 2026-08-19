@@ -1,4 +1,4 @@
-static bool ParseExpression(string input, out double num1, out double num2, out char op)
+static bool ParseExpression(string input, out double num1, , out char op,out double num2)
     {
         num1 = 0;
         num2 = 0;
@@ -17,8 +17,8 @@ try
         string part1 = input.Substring(0, index).Trim();
         string part2 = input.Substring(index + 1).Trim();
 
-        double num1=double.Parse(part1);
-        double num2=double.Parse(part2);
+         num1=double.Parse(part1);
+         num2=double.Parse(part2);
         return true;
     }
         catch (FormatException)
