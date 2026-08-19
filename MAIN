@@ -1,0 +1,55 @@
+using System;
+
+class Program
+{
+   
+    static void Main()
+    {
+        bool keepCalculating = true;
+
+        Console.WriteLine("===  Hi💕,Welcome to our little Calculator ===");
+
+        while (keepCalculating)
+        {
+           
+            string input  = GetUserInput();
+            double num1;
+			double num2;
+            char op;
+            ParseExpression(input, out num1, out op, out num2);
+            double result = Calculate(num1, op, num2);
+           DisplayResult(num1, op, num2, result);
+
+         
+            Console.Write("Another calculation🫣? (y/n) ");
+            string answer = Console.ReadLine().ToLower();
+            
+            if (answer != "y")
+            {
+                keepCalculating = false;
+                Console.WriteLine(" ❤️Goodbye!");
+            }
+        }
+    }
+
+ 
+    static void DisplayResult(double num1, char op, double num2, double result)
+    {
+        Console.WriteLine(num1+" "+op+" "+num2+" "+" = "+result);
+       
+    }
+
+ public static string GetUserInput()
+    {
+        string userInput;
+        Console.Write("Enter your calculation:");
+        userInput=Console.ReadLine();
+        while (string.IsNullOrWhiteSpace(userInput)){
+            Console.Write("Input cannot be empty\nPlease enter your calculation:");
+            userInput=Console.ReadLine();
+        }
+        return userInput;
+    }
+
+  
+    }
