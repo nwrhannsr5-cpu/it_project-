@@ -50,6 +50,34 @@ class Program
         }
         return userInput;
     }
+static bool ParseExpression(string input, out double num1, , out char op,out double num2)
+    {
+        num1 = 0;
+        num2 = 0;
+        op = ' ';
+
+        char[] operators = new char[] { '+', '-', '*', '/' };
+        int index = input.IndexOfAny(operators);
+        if (index<=0 || index >= input.Length - 1)
+        {
+            return false;
+        }
+try
+        {
+         op = input[index];
+
+        string part1 = input.Substring(0, index).Trim();
+        string part2 = input.Substring(index + 1).Trim();
+
+         num1=double.Parse(part1);
+         num2=double.Parse(part2);
+        return true;
+    }
+        catch (FormatException)
+        {
+            return false;
+        }
+    }
 
   
     }
